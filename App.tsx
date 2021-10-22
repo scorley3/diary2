@@ -33,7 +33,8 @@ class MainComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			num: 0
+			num: 0,
+			entryCreation: false
 		}
 	}
 	onClick = () => {
@@ -48,7 +49,15 @@ class MainComponent extends React.Component {
 	this.setState(setStateFunction(this.state, count));
 	console.log(this.state);
 	}
-	
+	entryCreate = () => {
+		function setStateFunction(state) {
+			const newState = {entryCreation: true};
+			console.log(newState);
+			return newState;
+		}
+	this.setState(setStateFunction(this.state));
+	console.log(this.state);
+	}
 	render(){
 		//const [state,setState] = useState(0);
 		console.log("mad");
@@ -56,16 +65,26 @@ class MainComponent extends React.Component {
 						<SectionComponent key={key} style = {styles.section} onPress={this.onClick} text={text} buttonNum = {buttonNum} textBox = {textBox} /> 
 						));
 		console.log(array[count]);
-		return (
-			<View style = {styles.container}>
-				<Button title='new entry' color = '#c71585' borderRadius = {4}/>
-				<Button title='past entries' color = '#c71585' />
-				<View style = {styles.frame}>
-					{array[count]}
+		if (this.state.entryCreation == true) {
+			return (
+				<View style = {styles.container}>
+					<Button title='new entry' color = '#c71585' borderRadius = {4} onPress={this.entryCreate}/>
+					<Button title='past entries' color = '#c71585' />
+					<View style = {styles.frame}>
+						{array[count]}
+					</View>
+					
 				</View>
-				
-			</View>
-		);	
+			);	
+		} else {
+			return (
+				<View>
+					<Button title='new entry' color = '#c71585' borderRadius = {4} onPress={this.entryCreate} />
+					<Button title='past entries' color = '#c71585' />
+				</View>
+			);
+			
+		}
 	}
 }
 
