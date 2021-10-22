@@ -19,6 +19,11 @@ const componentArr = [
 	{ key: 4, text: "how are you feeling today?" , buttonNum : 3, textBox : false},
 	{ key: 5, text: "what did you eat today?" , buttonNum : 1, textBox : true},
 	{ key: 6, text: "did you take a shower?" , buttonNum : 2, textBox : false},
+	{ key: 7, text: "what made you happy today?" , buttonNum : 1, textBox : true},
+	{ key: 8, text: "what did you wear today?" , buttonNum : 1, textBox : true},
+	{ key: 9, text: "how much water did you drink?" , buttonNum : 1, textBox : true},
+	{ key: 10, text: "is your room clean?" , buttonNum : 2, textBox : false},
+	{ key: 11, text: "did you exercise today?" , buttonNum : 2, textBox : false},
 
 
 ]
@@ -96,19 +101,23 @@ class SectionComponent extends React.Component {
 			var arr = ['yes','no'];
 			var buttonArr = [];
 			for (var x = 0; x < arr.length; x++) {
-				buttonArr.push(<Button color = '#c71585' title = {arr[x]} onPress={this.state.onClick}/>);
+				buttonArr.push(<Button padding={10} margin={10} color = '#c71585' title = {arr[x]} onPress={this.state.onClick}/>);
 			}
 			return (
 				<View style = {styles.section}>
-				<Text>{this.state.text}</Text>
+				<Text padding = {10} margin={10}>{this.state.text}</Text>
+				<View>
 				{buttonArr}
+				</View>
 				</View>
 			);
 		} else {
 			return (
 				<View style = {styles.section}>
 				<Text>{this.state.text}</Text>
-				{Array(this.state.buttonNum).fill(<Button color = '#c71585' title = 'maybe' />)}
+				<View style = {styles.buttons}>
+				{Array(this.state.buttonNum).fill(<Button color = '#c71585' title = 'maybe' onPress={this.state.onClick}/>)}
+				</View>
 				</View>
 			
 			);
@@ -132,14 +141,21 @@ const styles = StyleSheet.create({
 	width: 300,
 	height: 400,
 	borderRadius: 4,
-	justifyContent: 'center',
+	justifyContent: 'space-around',
 	alignItems: 'center',
+	padding: 10,
+	margin: 10
 	
   },
   frame: {
 	flexDirection: "row",
 	justifyContent: 'center',
 	alignItems: 'center',
+	padding: 10,
+	margin: 10
+  },
+  buttons: {
+	margin: 20,
   }
 
 });
