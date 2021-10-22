@@ -23,24 +23,34 @@ const componentArr = [
 
 ]
 
-var count = 0;
+let count = 0;
 class MainComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			num: 0
+			num: count
 		}
 		this.setState = () => {
-			num: 1
+			num: 5
 		}
 	}
 	onClick = () => {
-	count++;
-	console.log(count);
-	setState({});
+		count++;
+		console.log(count);
+		console.log(this.state);
+		this.setState({ num: 5});
+		console.log(this.state);
+		function setStateFunction(state, count) {
+			const newState = {num: count};
+			console.log(newState);
+			return newState;
+		}
+	this.setState(setStateFunction);
 	}
+	
 	render(){
 		//const [state,setState] = useState(0);
+		console.log("mad");
 		var array = componentArr.map(({ text, buttonNum, textBox }) => (
 						<SectionComponent style = {styles.section} onPress={this.onClick} text={text} buttonNum = {buttonNum} textBox = {textBox} /> 
 						));
