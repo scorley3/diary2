@@ -12,13 +12,13 @@ export default function App() {
 }
 
 const componentArr = [
-	{ text: "did you brush your teeth?" , buttonNum : 2, textBox : false},
-	{ text: "did you sleep enough?" , buttonNum : 2, textBox : false},
-	{ text: "what homework do you have?" , buttonNum : 1, textBox : true},
-	{ text: "do you have any tests tomorrow?" , buttonNum : 2, textBox : false},
-	{ text: "how are you feeling today?" , buttonNum : 3, textBox : false},
-	{ text: "what did you eat today?" , buttonNum : 1, textBox : true},
-	{ text: "did you take a shower?" , buttonNum : 2, textBox : false},
+	{ key: 0, text: "did you brush your teeth?" , buttonNum : 2, textBox : false},
+	{ key: 1, text: "did you sleep enough?" , buttonNum : 2, textBox : false},
+	{ key: 2, text: "what homework do you have?" , buttonNum : 1, textBox : true},
+	{ key: 3, text: "do you have any tests tomorrow?" , buttonNum : 2, textBox : false},
+	{ key: 4, text: "how are you feeling today?" , buttonNum : 3, textBox : false},
+	{ key: 5, text: "what did you eat today?" , buttonNum : 1, textBox : true},
+	{ key: 6, text: "did you take a shower?" , buttonNum : 2, textBox : false},
 
 
 ]
@@ -28,33 +28,29 @@ class MainComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			num: count
-		}
-		this.setState = () => {
-			num: 5
+			num: 0
 		}
 	}
 	onClick = () => {
 		count++;
 		console.log(count);
 		console.log(this.state);
-		this.setState({ num: 5});
-		console.log(this.state);
 		function setStateFunction(state, count) {
 			const newState = {num: count};
 			console.log(newState);
 			return newState;
 		}
-	this.setState(setStateFunction);
+	this.setState(setStateFunction(this.state, count));
+	console.log(this.state);
 	}
 	
 	render(){
 		//const [state,setState] = useState(0);
 		console.log("mad");
-		var array = componentArr.map(({ text, buttonNum, textBox }) => (
-						<SectionComponent style = {styles.section} onPress={this.onClick} text={text} buttonNum = {buttonNum} textBox = {textBox} /> 
+		var array = componentArr.map(({ key, text, buttonNum, textBox }) => (
+						<SectionComponent key={key} style = {styles.section} onPress={this.onClick} text={text} buttonNum = {buttonNum} textBox = {textBox} /> 
 						));
-		
+		console.log(array[count]);
 		return (
 			<View style = {styles.container}>
 				<Button title='new entry' color = '#c71585' borderRadius = {4}/>
@@ -93,7 +89,7 @@ class SectionComponent extends React.Component {
 				<View style = {styles.section}>
 				<Text>{this.state.text}</Text>
 				<input type='text' />
-				<Button color = '#c71585' title = 'submit' onPress= {props.onClick} />
+				<Button color = '#c71585' title = 'submit' onPress= {this.state.onClick} />
 				</View>
 				);
 		} else if (this.state.textBox == false & this.state.buttonNum == 2) {
@@ -133,7 +129,7 @@ const styles = StyleSheet.create({
 	border: "4px solid mediumVioletRed",
 	margin: 20,
 	borderWidth: 4,
-	width: 200,
+	width: 300,
 	height: 400,
 	borderRadius: 4,
 	justifyContent: 'center',
