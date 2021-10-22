@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import useState from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, Component } from 'react-native';
 
 export default function App() {
@@ -13,7 +12,7 @@ export default function App() {
 }
 
 const componentArr = [
-	{ text: "did you brush your teeth today?" , buttonNum : 2, textBox : false},
+	{ text: "did you brush your teeth?" , buttonNum : 2, textBox : false},
 	{ text: "did you sleep enough?" , buttonNum : 2, textBox : false},
 	{ text: "what homework do you have?" , buttonNum : 1, textBox : true},
 	{ text: "do you have any tests tomorrow?" , buttonNum : 2, textBox : false},
@@ -23,34 +22,51 @@ const componentArr = [
 
 
 ]
+
+var count = 0;
 class MainComponent extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { 
+			num: 0
+		}
+		this.setState = () => {
+			num: 1
+		}
+	}
+	onClick = () => {
+	count++;
+	console.log(count);
+	setState({});
+	}
 	render(){
+		//const [state,setState] = useState(0);
 		var array = componentArr.map(({ text, buttonNum, textBox }) => (
-						<SectionComponent text={text} buttonNum = {buttonNum} textBox = {textBox} style = {styles.section} /> 
+						<SectionComponent style = {styles.section} onPress={this.onClick} text={text} buttonNum = {buttonNum} textBox = {textBox} /> 
 						));
 		
 		return (
 			<View style = {styles.container}>
-				<Button title='new entry' color = '#c71585' margin = {20} borderRadius = {4} />
+				<Button title='new entry' color = '#c71585' borderRadius = {4}/>
 				<Button title='past entries' color = '#c71585' />
 				<View style = {styles.frame}>
-					
-					<View style = {styles.frame}>
-					{array[0]}
-					</View>
+					{array[count]}
 				</View>
 				
 			</View>
 		);	
 	}
 }
+
+
 class SectionComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			text: props.text,
 			buttonNum: props.buttonNum,
-			textBox: props.textBox
+			textBox: props.textBox,
+			onClick: props.onPress,
 		
 		};
 	}
@@ -67,14 +83,14 @@ class SectionComponent extends React.Component {
 				<View style = {styles.section}>
 				<Text>{this.state.text}</Text>
 				<input type='text' />
-				<Button color = '#c71585' title = 'submit' />
+				<Button color = '#c71585' title = 'submit' onPress= {props.onClick} />
 				</View>
 				);
 		} else if (this.state.textBox == false & this.state.buttonNum == 2) {
 			var arr = ['yes','no'];
 			var buttonArr = [];
 			for (var x = 0; x < arr.length; x++) {
-				buttonArr.push(<Button color = '#c71585' title = {arr[x]} />);
+				buttonArr.push(<Button color = '#c71585' title = {arr[x]} onPress={this.state.onClick}/>);
 			}
 			return (
 				<View style = {styles.section}>
